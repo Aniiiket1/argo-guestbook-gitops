@@ -1,35 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guestbook-frontend
+  name: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: guestbook-frontend
+      app: guestbook
   template:
     metadata:
       labels:
-        app: guestbook-frontend
+        app: guestbook
     spec:
       containers:
-      - name: frontend
+      - name: guestbook
         image: gcr.io/google-samples/gb-frontend:v5
         ports:
         - containerPort: 80
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: guestbook-frontend
+  name: frontend
 spec:
   type: NodePort
   selector:
-    app: guestbook-frontend
+    app: guestbook
   ports:
   - port: 80
     targetPort: 80
+
 
